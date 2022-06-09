@@ -37,12 +37,14 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
+    # 3rd party apps
+    "django_countries",
+    # # # # # # # # # # # # # # #
     # local apps
+    # # # # # # # # # # # # # # #
     "core",
-    "users",
-    # "users.apps.UsersConfig",
-    "rooms",
-    # "rooms.apps.RoomsConfig",
+    "users",  # "users.apps.UsersConfig",
+    "rooms",  # "rooms.apps.RoomsConfig",
 ]
 
 MIDDLEWARE = [
