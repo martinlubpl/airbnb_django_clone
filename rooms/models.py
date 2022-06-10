@@ -82,3 +82,15 @@ class Room(TimeStampModel):
 
     def __str__(self):
         return "room: " + self.name
+
+
+class Photo(TimeStampModel):
+    """Photo Model"""
+
+    caption = models.CharField(max_length=128)
+    file = models.ImageField(upload_to="room_photos")
+    room = models.ForeignKey(Room, related_name="photos", on_delete=models.CASCADE)
+    # or use "Room" instead of Room.
+
+    def __str__(self):
+        return self.caption
