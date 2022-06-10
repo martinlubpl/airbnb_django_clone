@@ -5,6 +5,23 @@ from core.models import TimeStampModel
 
 # Create your models here.
 
+
+class AbstractItem(TimeStampModel):
+    """Abstract Item"""
+
+    name = models.CharField(max_length=128)
+
+    class Meta:
+        abstract = True
+
+    def __str__(self):
+        return self.name
+
+
+class RoomType(AbstractItem):
+    pass
+
+
 # ! inherit from abstract TimeStampModel
 
 
@@ -31,6 +48,7 @@ class Room(TimeStampModel):
     check_out = models.TimeField()
     instant_book = models.BooleanField(default=False)
     host = models.ForeignKey("users.User", on_delete=models.CASCADE)
+    room_type = models.ManyToManyField("RoomType", blank=True)
 
     def __str__(self):
         return "room: " + self.name
