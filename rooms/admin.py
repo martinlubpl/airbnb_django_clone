@@ -39,6 +39,7 @@ class RoomAdmin(admin.ModelAdmin):
         "host",
         "room_type",
         "count_amenities",  # fun call to count_amenities
+        "count_photos",  # also a fun
     )
 
     ordering = (
@@ -70,12 +71,23 @@ class RoomAdmin(admin.ModelAdmin):
         return obj.amenities.count()
         # return "aaa"
 
+    def count_photos(self, obj):
+        return obj.photos.count()
+
     count_amenities.short_description = "Am-ties Count"
 
 
 @admin.register(RoomType, Facility, Amenity, HouseRule)
 class ItemAdmin(admin.ModelAdmin):
     """Item Admin"""
+
+    list_display = (
+        "name",
+        "count_rooms",
+    )
+
+    def count_rooms(self, obj):
+        return obj.rooms.count()
 
     pass
 

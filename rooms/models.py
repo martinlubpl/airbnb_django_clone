@@ -91,7 +91,7 @@ class Photo(TimeStampModel):
 
     caption = models.CharField(max_length=128)
     file = models.ImageField(upload_to="room_photos")
-    room = models.ForeignKey(Room, related_name="rooms", on_delete=models.CASCADE)
+    room = models.ForeignKey(Room, related_name="photos", on_delete=models.CASCADE)
     # or use "Room" instead of Room.
 
     def __str__(self):
