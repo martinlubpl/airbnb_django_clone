@@ -38,6 +38,12 @@ class RoomAdmin(admin.ModelAdmin):
         "instant_book",
         "host",
         "room_type",
+        "count_amenities",  # fun call to count_amenities
+    )
+
+    ordering = (
+        "name",
+        "price",
     )
 
     list_filter = (
@@ -58,7 +64,13 @@ class RoomAdmin(admin.ModelAdmin):
     search_fields = ("city", "name", "description", "host__username")
     # "^city"
     # /ref/contrib/admin/#django.contrib.admin.ModelAdmin.search_fields
-    # "host__username" __ instead of . because it's a foreign key
+    # "host__username" __ instead of . for foreign key
+
+    def count_amenities(self, obj):  # obj is current row of RoomAdmin
+        return obj.amenities.count()
+        # return "aaa"
+
+    count_amenities.short_description = "Am-ties Count"
 
 
 @admin.register(RoomType, Facility, Amenity, HouseRule)
