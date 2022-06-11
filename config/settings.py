@@ -48,6 +48,7 @@ INSTALLED_APPS = [
     "reviews",  # "reviews.apps.ReviewsConfig",
     "reservations",
     "conversations",
+    "lists",
 ]
 
 MIDDLEWARE = [
