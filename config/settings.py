@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     "core",
     "users",  # "users.apps.UsersConfig",
     "rooms",  # "rooms.apps.RoomsConfig",
+    "reviews",  # "reviews.apps.ReviewsConfig",
 ]
 
 MIDDLEWARE = [
