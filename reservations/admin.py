@@ -8,13 +8,20 @@ from .models import Reservation
 class ReservationAdmin(admin.ModelAdmin):
     """Reservation Admin"""
 
-    # list_display = (
-    #     "room",
-    #     "status",
-    #     "guest",
-    #     "check_in",
-    #     "check_out",
-    #     "created",
-    #     "modified",
-    # )
-    pass
+    list_display = (
+        "room",
+        "status",
+        "guest",
+        "in_progress",  # def in .models.Reservation
+        "is_finished",  # def in .models.Reservation
+        "check_in",
+        "check_out",
+        "created",
+        "updated",
+    )
+
+    list_filter = (
+        "status",
+        "created",
+        "updated",
+    )

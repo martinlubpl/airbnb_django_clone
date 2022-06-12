@@ -1,5 +1,5 @@
 from django.db import models
-
+from django.utils import timezone
 from core.models import TimeStampModel
 
 # Create your models here.
@@ -8,7 +8,7 @@ from core.models import TimeStampModel
 class Reservation(TimeStampModel):
     """Reservation model"""
 
-    STATUS = models.CharField(
+    status = models.CharField(
         max_length=20,
         choices=(
             ("pending", "Pending"),
@@ -32,3 +32,17 @@ class Reservation(TimeStampModel):
 
     def __str__(self):
         return f"{self.room} - {self.check_in} to {self.check_out}"
+
+    def in_progress(self):
+        now = timezone.now().date()
+        return now >= self.check_in and now <= self.check_out
+
+    in_progress.boolean = True
+    in_progress.short_description = "now?"
+
+    def is_finished(self):
+        now = timezone.now().date()
+        return now > self.check_out
+
+    is_finished.boolean = True
+    is_finished.short_description = "ended?"
