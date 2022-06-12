@@ -8,11 +8,15 @@ from .models import Conversation, Message
 class ConversationAdmin(admin.ModelAdmin):
     """Conversations Admin"""
 
-    pass
+    list_display = (
+        "__str__",
+        "count_messages",
+        "count_participants",
+    )
 
 
 @admin.register(Message)
 class MessageAdmin(admin.ModelAdmin):
     """Messages Admin"""
 
-    pass
+    list_display = ("__str__", "created")

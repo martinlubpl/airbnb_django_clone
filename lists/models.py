@@ -16,3 +16,9 @@ class List(TimeStampModel):
 
     def __str__(self):
         return self.name
+
+    # helper function to get the number of rooms in a list
+    def count_rooms(self):
+        return self.room.count()
+
+    count_rooms.short_description = "saved places"

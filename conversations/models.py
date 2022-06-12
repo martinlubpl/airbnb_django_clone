@@ -15,7 +15,20 @@ class Conversation(TimeStampModel):
     )
 
     def __str__(self):
-        return f"{self.created} - {self.participants.all()}"
+        chat_users = []
+        for usr in self.participants.all():
+            chat_users.append(usr.username)
+        return f"Conversation between {', '.join(chat_users)}"
+
+    def count_messages(self):
+        return self.messages.count()  # related_name
+
+    count_messages.short_description = "# of Messages"
+
+    def count_participants(self):
+        return self.participants.count()  # related_name
+
+    count_participants.short_description = "# of Participants"
 
 
 class Message(TimeStampModel):

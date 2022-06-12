@@ -91,7 +91,9 @@ class Room(TimeStampModel):
 
         for review in all_reviews:
             all_ratings.append(review.get_avg())
-
+        # div by 0
+        if len(all_ratings) == 0:
+            return 3.0
         return round(sum(all_ratings) / len(all_ratings), 2)
 
     get_room_average.short_description = "Room Rating"

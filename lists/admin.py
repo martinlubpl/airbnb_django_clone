@@ -8,4 +8,15 @@ from .models import List
 class ListAdmin(admin.ModelAdmin):
     """List Admin Model"""
 
-    pass
+    list_display = (
+        "name",
+        "user",
+        "count_rooms",
+    )
+    search_fields = (
+        "name",
+        "user__username",
+        "room__name",
+    )
+
+    filter_horizontal = ("room",)
