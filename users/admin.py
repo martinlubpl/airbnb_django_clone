@@ -11,9 +11,18 @@ from users.models import User
 class CustomUserAdmin(UserAdmin):
     """Custom User Admin"""
 
-    list_display = ("username", "email", "gender", "language", "currency", "superhost")
+    list_display = (
+        "username",
+        "first_name",
+        "last_name",
+        "email",
+        "gender",
+        "language",
+        "currency",
+        "superhost",
+    )
 
-    list_filter = (
+    list_filter = UserAdmin.list_filter + (
         "superhost",
         "language",
         "currency",

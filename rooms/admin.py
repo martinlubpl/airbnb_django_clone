@@ -27,6 +27,7 @@ class RoomAdmin(admin.ModelAdmin):
     list_display = (
         "name",
         # "description",
+        "get_room_average",  # def in .models.Room
         "country",
         "city",
         "price",

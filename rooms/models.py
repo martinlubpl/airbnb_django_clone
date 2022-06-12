@@ -85,6 +85,17 @@ class Room(TimeStampModel):
     def __str__(self):
         return "room: " + self.name
 
+    def get_room_average(self):
+        all_reviews = self.reviews.all()
+        all_ratings = []
+
+        for review in all_reviews:
+            all_ratings.append(review.get_avg())
+
+        return round(sum(all_ratings) / len(all_ratings), 2)
+
+    get_room_average.short_description = "Room Rating"
+
 
 class Photo(TimeStampModel):
     """Photo Model"""
