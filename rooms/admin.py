@@ -3,11 +3,18 @@ from django.utils.html import mark_safe
 from .models import Facility, Room, RoomType, Amenity, HouseRule, Photo
 
 
+class PhotoInline(admin.TabularInline):
+    model = Photo  # rooms.models.Photo
+
+
 # Register your models here.
 @admin.register(Room)
 class RoomAdmin(admin.ModelAdmin):
     """Room Admin"""
 
+    inlines = [
+        PhotoInline,
+    ]
     fieldsets = (
         (
             "Basic Info",
@@ -61,6 +68,8 @@ class RoomAdmin(admin.ModelAdmin):
         "city",
         "country",
     )
+
+    raw_id_fields = ("host",)
 
     filter_horizontal = ("amenities", "facilities", "house_rules")
 
