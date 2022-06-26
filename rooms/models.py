@@ -85,6 +85,10 @@ class Room(TimeStampModel):
     def __str__(self):
         return "room: " + self.name
 
+    def save(self, *args, **kwargs):
+        self.city = self.city.title()
+        super().save(*args, **kwargs)
+
     def get_room_average(self):
         all_reviews = self.reviews.all()
         all_ratings = []
