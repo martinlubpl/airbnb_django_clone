@@ -2,7 +2,7 @@ import random
 from django.core.management.base import BaseCommand
 from django.contrib.admin.utils import flatten
 from django_seed import Seed
-from rooms.models import Room, RoomType, Photo
+from rooms.models import Amenity, Room, RoomType, Photo, Facility, HouseRule
 from users.models import User
 
 
@@ -39,6 +39,12 @@ class Command(BaseCommand):
         created_rooms = seeder.execute()
         created_rooms = flatten(list(created_rooms.values()))
 
+        # AFR
+        amenities = Amenity.objects.all()
+        # print(amenities)
+        facilities = Facility.objects.all()
+        rules = HouseRule.objects.all()
+
         for pk in created_rooms:
             room = Room.objects.get(pk=pk)
             for i in range(random.randint(3, 15)):
@@ -47,5 +53,19 @@ class Command(BaseCommand):
                     file=f"/room_photos/{random.randint(1,111)}.jpg",
                     room=room,
                 )
+            # random choose amenities, facilities, rules
+            for a in amenities:
+                if random.randint(0, 1) == 1:
+                    room.amenities.add(a)
+                    # print("ok")
 
+            for f in facilities:
+                if random.randint(0, 1) == 1:
+                    room.facilities.add(f)
+
+            for r in rules:
+                if random.randint(0, 1) == 1:
+                    room.house_rules.add(r)
+
+        # summarize
         self.stdout.write(self.style.SUCCESS(f"{number} rooms created"))
