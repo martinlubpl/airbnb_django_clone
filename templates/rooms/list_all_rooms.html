@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    Home page
+{% endblock title %}
+
+{% block content %}
+    {% for room in rooms  %}
+        <h1>{{ room.name }} at {{ room.price }}$ by night</h1>
+    {% endfor %}
+{% endblock content %}
