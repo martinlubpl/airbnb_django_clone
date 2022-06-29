@@ -9,7 +9,12 @@
 
     {% comment %} context_object_name="rooms" in views {% endcomment %}
     {% for room in rooms  %} 
-        <h1>{{ room.name }} at {{ room.price }}$ by night</h1>
+        <h3>
+            {% comment %} rooms in namespace, room detail is name in path, room.pk is arg {% endcomment %}
+            <a href="{% url 'rooms:room_detail' room.pk %}">
+                {{ room.name }} at {{ room.price }}$ per night
+            </a>
+        </h3>
     {% endfor %}
 
     <h3>
