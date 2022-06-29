@@ -5,5 +5,5 @@ app_name = "core"  # required for config.urls namespace
 
 
 urlpatterns = [
-    path("", room_views.list_all_rooms, name="home"),
+    path("", room_views.HomeView.as_view(), name="home"),
 ]

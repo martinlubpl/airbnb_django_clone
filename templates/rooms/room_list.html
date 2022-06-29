@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    Home page
+{% endblock title %}
+
+{% block content %}
+    Time: {{time}}
+
+    {% comment %} context_object_name="rooms" in views {% endcomment %}
+    {% for room in rooms  %} 
+        <h1>{{ room.name }} at {{ room.price }}$ by night</h1>
+    {% endfor %}
+
+    <h3>
+        {% if page_obj.has_previous %}<a href="/?page={{page_obj.previous_page_number}}"><< Previous<a>{% endif %}
+          Page {{page_obj.number}} of {{page_obj.paginator.num_pages}}
+        {% if page_obj.has_next %}<a href="/?page={{page_obj.next_page_number}}">Next >><a>{% endif %}
+    </h3>
+
+    Pages: 
+    {% for page in page_obj.paginator.page_range %}
+        <a href="/?page={{page}}">{{page}}</a>  
+    {% endfor %}
+{% endblock content %}

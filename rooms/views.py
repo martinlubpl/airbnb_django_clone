@@ -1,36 +1,26 @@
-# from django.shortcuts import render
-# from django.http import HttpResponse
-# import math
-
-from django.shortcuts import render, redirect
-from django.core.paginator import Paginator, EmptyPage
+from django.views.generic.list import ListView
+from django.utils import timezone
 from . import models
 
 
 # Create your views here.
 
 
-def list_all_rooms(request):
+class HomeView(ListView):
 
-    page = int(request.GET.get("page", 1) or 1)
-    room_list = models.Room.objects.all()  # lazy
-    paginator = Paginator(
-        room_list,
-        per_page=10,
-        orphans=5,
-    )  # attach 5 or less orphans to previous page
-    # rooms = paginator.get_page(page)
+    """Home view for index page"""
 
-    # with page() you can catch exceptions
-    try:
-        rooms = paginator.page(int(page))
-        return render(
-            request,
-            "rooms/list_all_rooms.html",
-            context={
-                "page": rooms,
-            },
-        )
-    except EmptyPage:
-        # rooms = paginator.page(1)
-        return redirect("/")
+    template_name = "rooms/room_list.html"
+    model = models.Room
+    paginate_by = 10
+    ordering = "created"
+    paginate_orphans = 5
+    page_kwarg = "page"  # /?page_kwarg=1
+    context_object_name = "rooms"
+    # page_obj is sent
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        # additional
+        context["time"] = timezone.now()
+        return context
