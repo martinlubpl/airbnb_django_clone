@@ -1,9 +1,47 @@
 {% extends 'base.html' %}
 
 {% block title %}
-    Home page
+    Detail page
 {% endblock title %}
 
 {% block content %}
+    <div><h3>{{room.name}}</h3><div>
+    <div><h4>{{room.description}}</h4><div>
+
+    <div>
+        Host: {{room.host.username}}
+        {% if room.host.superhost %}
+             .:. Superhost
+        {% endif %}
+
+        <h4>
+            Amenities
+        </h4>
+        <ul>
+            {% comment %} ALL!!! {% endcomment %}
+            {% for a in room.amenities.all %} 
+                <li>{{a.name}}</li>
+            {% endfor %}
+        </ul>
+        <h4>
+            Facilities
+        </h4>
+        <ul>
+            {% comment %} ALL!!! {% endcomment %}
+            {% for f in room.facilities.all %} 
+                <li>{{f.name}}</li>
+            {% endfor %}
+        </ul>
+        <h4>
+            House Rules
+        </h4>
+        <ul>
+            {% comment %} ALL!!! {% endcomment %}
+            {% for r in room.house_rules.all %} 
+                <li>{{r.name}}</li>
+            {% endfor %}
+        </ul>
+
+    </div>
 
 {% endblock content %}

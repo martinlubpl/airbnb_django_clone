@@ -1,5 +1,5 @@
 from django.db import models
-
+from django.urls import reverse
 from django_countries.fields import CountryField
 from core.models import TimeStampModel
 
@@ -85,9 +85,13 @@ class Room(TimeStampModel):
     def __str__(self):
         return "room: " + self.name
 
+    # overriding save
     def save(self, *args, **kwargs):
         self.city = self.city.title()
         super().save(*args, **kwargs)
+
+    def get_absolute_url(self):
+        return reverse("rooms:room_detail", kwargs={"pk": self.pk})
 
     def get_room_average(self):
         all_reviews = self.reviews.all()
