@@ -1,9 +1,12 @@
 from django.views.generic.list import ListView
+from django.views.generic.detail import DetailView
 from django.utils import timezone
-from django.shortcuts import render
+
+
+# from django.shortcuts import render
 
 # from django.urls import reverse
-from django.http import Http404
+# from django.http import Http404
 from . import models
 
 
@@ -30,18 +33,9 @@ class HomeView(ListView):
         return context
 
 
-def room_detail(request, pk):
-    # print(pk)
-    try:
-        room = models.Room.objects.get(pk=pk)
-    except models.Room.DoesNotExist:
-        # return redirect(reverse("core:home"))
-        raise Http404()
+class RoomDetail(DetailView):
 
-    return render(
-        request,
-        "rooms/room_detail.html",
-        context={
-            "room": room,
-        },
-    )
+    """CBV Room Detail"""
+
+    template_name = "rooms/room_detail.html"
+    context_object_name = "room"
