@@ -3,7 +3,7 @@ from django.views.generic.detail import DetailView
 from django.utils import timezone
 
 
-# from django.shortcuts import render
+from django.shortcuts import render
 
 # from django.urls import reverse
 # from django.http import Http404
@@ -39,3 +39,16 @@ class RoomDetail(DetailView):
 
     template_name = "rooms/room_detail.html"
     context_object_name = "room"
+
+
+def search(request):
+    # print(vars(request))
+    city = (request.GET.get("city")).capitalize()
+    print(city)
+    return render(
+        request,
+        "rooms/search.html",
+        context={
+            "city": city,
+        },
+    )
