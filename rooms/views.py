@@ -7,6 +7,9 @@ from django.shortcuts import render
 
 # from django.urls import reverse
 # from django.http import Http404
+
+
+from django_countries import countries
 from . import models
 
 
@@ -43,12 +46,19 @@ class RoomDetail(DetailView):
 
 def search(request):
     # print(vars(request))
-    city = (request.GET.get("city")).capitalize()
-    print(city)
+    city = (request.GET.get("city", "Anywhere")).capitalize()
+    country = request.GET.get("country", "PL")
+    room_type = int(request.GET.get("room_type", 0))
+    # print(city)
+    room_types = models.RoomType.objects.all()
     return render(
         request,
         "rooms/search.html",
         context={
             "city": city,
+            "countries": countries,  # all
+            "room_types": room_types,  # all
+            "country": country,  # chosen
+            "room_type": room_type,  # chosen
         },
     )
