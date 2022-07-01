@@ -11,22 +11,24 @@
     <form method="GET" action="{% url 'rooms:search' %}">
         <div>
             <label for="city-input">City: </label>
-            <input value="{{city}}" name="city" placeholder="Search cities" id="city-input"/>
+            <input value="{{selected_city}}" name="city" placeholder="Search cities" id="city-input"/>
         </div>
 
         <div>
             <label for="country-input">Country: </label>
             <select id="country-input" name="country">
+                <option>Anywhere</option>
                 {% for country in countries %}
-                    <option value="{{country.code}}">{{country.name}}</option>
+                    <option value="{{country.code}}" {% if country.code == selected_country %} selected{% endif %}>{{country.name}}</option>
                 {% endfor %}
             </select>
         <div>
         <div>
             <label for="type-input">Room type: </label>
             <select id="type-input" name="room_type">
+                <option value="0">Any</option>
                 {% for room_type in room_types %}
-                    <option value="{{room_type.pk}}">{{room_type.name}}</option>
+                    <option value="{{room_type.pk}}" {% if room_type.pk == selected_room_type %}selected{% endif %}>{{room_type.name}}</option>
                 {% endfor %}
             </select>
         <div>

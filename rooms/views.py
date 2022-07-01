@@ -47,18 +47,24 @@ class RoomDetail(DetailView):
 def search(request):
     # print(vars(request))
     city = (request.GET.get("city", "Anywhere")).capitalize()
-    country = request.GET.get("country", "PL")
+    country = request.GET.get("country", "Anywhere")
     room_type = int(request.GET.get("room_type", 0))
     # print(city)
     room_types = models.RoomType.objects.all()
+
+    chosen = {
+        "selected_city": city,
+        "selected_country": country,  # chosen
+        "selected_room_type": room_type,  # chosen
+    }
+
+    choices = {
+        "countries": countries,  # all
+        "room_types": room_types,  # all
+    }
+
     return render(
         request,
         "rooms/search.html",
-        context={
-            "city": city,
-            "countries": countries,  # all
-            "room_types": room_types,  # all
-            "country": country,  # chosen
-            "room_type": room_type,  # chosen
-        },
+        context={**chosen, **choices},  # **unpack dict, * for tuples
     )
