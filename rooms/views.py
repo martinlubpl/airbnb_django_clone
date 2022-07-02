@@ -62,9 +62,9 @@ def search(request):
     baths = int(request.GET.get("baths", 0))
     s_amenities = request.GET.getlist("amenities")  # get list of pks
     s_facilities = request.GET.getlist("facilities")
-    instant = request.GET.get("instant", False)
+    instant = bool(request.GET.get("instant", False))
     # print(instant)
-    superhost = request.GET.get("superhost", False)
+    superhost = bool(request.GET.get("superhost", False))
 
     chosen = {
         "selected_city": city,
@@ -88,8 +88,43 @@ def search(request):
         "facilities": facilities,
     }
 
+    query_filters = {}
+    # FIELD LOOKUPS!
+    if city != "Anywhere":
+        query_filters["city__startswith"] = city
+    # print(query_filters)
+    # print(country)
+    if country != "Anywhere":
+        query_filters["country"] = country
+    if room_type != 0:
+        query_filters["room_type__pk__exact"] = room_type  # fk use pk
+    if price > 0:
+        query_filters["price__lte"] = price
+    if guests > 0:
+        query_filters["guests__gte"] = guests
+    if bedrooms > 0:
+        query_filters["bedrooms__gte"] = bedrooms
+    if beds > 0:
+        query_filters["beds__gte"] = beds
+    if baths > 0:
+        query_filters["baths__gte"] = baths
+    if instant is True:
+        query_filters["instant_book"] = True
+    if superhost is True:
+        query_filters["host__superhost"] = True
+    if len(s_amenities) > 0:
+        for a_pk in s_amenities:
+            query_filters["amenities__pk"] = int(a_pk)
+    if len(s_facilities) > 0:
+        for f_pk in s_facilities:
+            query_filters["facilities__pk"] = int(f_pk)
+
+    # print(query_filters)
+    rooms = models.Room.objects.filter(**query_filters)
+    # print(rooms)
+
     return render(
         request,
         "rooms/search.html",
-        context={**chosen, **choices},  # **unpack dict, * for tuples
+        context={**chosen, **choices, "rooms": rooms},  # **unpack dict, * for tuples
     )
