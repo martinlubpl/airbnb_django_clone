@@ -2,6 +2,7 @@ from django.views.generic.list import ListView
 from django.views.generic.detail import DetailView
 from django.views.generic import View
 from django.utils import timezone
+from django.core.paginator import Paginator
 
 
 from django.shortcuts import render
@@ -96,7 +97,27 @@ class SearchView(View):
                 for f in facilities:
                     query_filters["facilities"] = f
 
-                rooms = models.Room.objects.filter(**query_filters)
+                queryset = models.Room.objects.filter(**query_filters).order_by(
+                    "-created"
+                )
+
+                paginator = Paginator(
+                    queryset,
+                    per_page=10,
+                    orphans=5,
+                )
+                page_nr = request.GET.get("page", 1)
+
+                page_obj = paginator.get_page(page_nr)
+
+                return render(
+                    request,
+                    "rooms/search.html",
+                    context={
+                        "form": form,
+                        "rooms": page_obj,
+                    },
+                )
 
         else:
             form = forms.SearchForm()
@@ -106,6 +127,5 @@ class SearchView(View):
             "rooms/search.html",
             context={
                 "form": form,
-                "rooms": rooms,
             },
         )

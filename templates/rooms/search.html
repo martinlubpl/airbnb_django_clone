@@ -12,7 +12,7 @@
         {{form.as_p}}
         <button>Search</button>
     </form>
-    <h4>Search results ({{rooms.count}}): </h4>
+    <h4>Search results ({{rooms.paginator.count}}): </h4>
     {% for room in rooms %}
         <h5>{{room.name}}</h5>
     {% endfor %}
