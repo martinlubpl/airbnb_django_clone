@@ -1,12 +1,12 @@
 import email
-from django.shortcuts import render, redirect
+from django.shortcuts import redirect
 from django.contrib.auth import authenticate, login, logout
 from django.views.generic import FormView
 from django.urls import reverse_lazy
 
 # from django.shortcuts import redirect
 # from django.views import View
-from .forms import LoginForm
+from .forms import LoginForm, SignUpForm
 
 # Create your views here.
 
@@ -32,3 +32,16 @@ class LoginView(FormView):
 def logout_view(request):
     logout(request)
     return redirect("core:home")
+
+
+class SignUpView(FormView):
+    template_name = "users/signup.html"
+    form_class = SignUpForm
+    success_url = reverse_lazy("core:home")
+
+    # just for testing
+    initial = {
+        "first_name": "Marcin",
+        "last_name": "Majewski",
+        "email": "martinpl@gmail.com",
+    }
