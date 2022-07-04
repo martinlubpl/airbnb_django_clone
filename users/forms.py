@@ -58,3 +58,16 @@ class SignUpForm(forms.Form):
         if password1 != password2:
             raise forms.ValidationError("Passwords do not match")
         return password2
+
+    def save(self):
+
+        # User.objects.create_user() is ok too
+        user = User.objects.create(
+            first_name=self.cleaned_data.get("first_name"),
+            last_name=self.cleaned_data.get("last_name"),
+            username=self.cleaned_data.get("email"),
+            email=self.cleaned_data.get("email"),
+        )
+        user.set_password(self.cleaned_data.get("password1"))
+        user.save()
+        return user
