@@ -10,27 +10,17 @@ class LoginForm(forms.Form):
         widget=forms.PasswordInput
     )  # cannot use PasswordInput directly
 
-    # clean_<fieldname>
-    def clean_email(self):
-        email = self.cleaned_data.get("email")
-        try:
-            # ! not email=email since username is email
-            User.objects.get(username=email)
-            return email
-        except User.DoesNotExist:
-            raise forms.ValidationError("User does not exist")
-
-    def clean_password(self):
+    def clean(self):
         email = self.cleaned_data.get("email")
         password = self.cleaned_data.get("password")
         try:
-            user = User.objects.get(username=email)
+            user = User.objects.get(email=email)
             # check_password => True if the given raw string is the correct
             if user.check_password(password):
-                return password
+                return self.cleaned_data
             else:
-                raise forms.ValidationError("Password is incorrect")
+                self.add_error(
+                    "password", forms.ValidationError("Password is incorrect")
+                )
         except User.DoesNotExist:
-            pass
-
-    # def clean(self): can also be used
+            self.add_error("email", forms.ValidationError("User does not exist"))
