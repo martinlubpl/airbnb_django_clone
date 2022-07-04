@@ -45,6 +45,8 @@ class CustomUserAdmin(UserAdmin):
         ),
     )
 
+    ordering = ("-date_joined",)
+
     # OLD WAY
     # list_display = ("username", "email", "gender", "language", "currency", "superhost")
     # list_filter = (

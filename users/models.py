@@ -28,12 +28,14 @@ class User(AbstractUser):
     CURRENCY_CHOICES = ((CURRENCY_USD, "USD"), (CURRENCY_PLN, "PLN"))
 
     avatar = models.ImageField(upload_to="avatars", blank=True)
-    gender = models.CharField(choices=GENDER_CHOICES, max_length=10, blank=True)
+    gender = models.CharField(
+        choices=GENDER_CHOICES, max_length=10, blank=True, default="other"
+    )
     bio = models.TextField(blank=True)
     # bio = models.TextField(null=True) # can be empty
     birthdate = models.DateField(blank=True, null=True)
     language = models.CharField(
-        choices=LANGUAGE_CHOICES, default="english", max_length=2, blank=True
+        choices=LANGUAGE_CHOICES, default="en", max_length=2, blank=True
     )
 
     currency = models.CharField(

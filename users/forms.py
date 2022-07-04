@@ -26,10 +26,19 @@ class LoginForm(forms.Form):
             self.add_error("email", forms.ValidationError("User does not exist"))
 
 
-class SignUpForm(forms.Form):
-    first_name = forms.CharField(max_length=30)
-    last_name = forms.CharField(max_length=30)
-    email = forms.EmailField()
+class SignUpForm(forms.ModelForm):
+
+    # Meta is required for modelforms
+    class Meta:
+        model = User
+        fields = [
+            "first_name",
+            "last_name",
+            "email",
+            # "password1",
+            # "password2",
+        ]
+
     password1 = forms.CharField(
         widget=forms.PasswordInput,
         label="Password",
@@ -44,13 +53,7 @@ class SignUpForm(forms.Form):
     )
 
     # clean_<field_name>
-    def clean_email(self):
-        email = self.cleaned_data.get("email")
-        try:
-            User.objects.get(email=email)
-            raise forms.ValidationError("User with this email already exists")
-        except User.DoesNotExist:
-            return email
+    # clean_email unnessesary-ModelForm cleans it. but nneds clean_pass to check passes are equal
 
     def clean_password2(self):
         password1 = self.cleaned_data.get("password1")
@@ -59,15 +62,11 @@ class SignUpForm(forms.Form):
             raise forms.ValidationError("Passwords do not match")
         return password2
 
-    def save(self):
+    def save(self, *args, **kwargs):
 
-        # User.objects.create_user() is ok too
-        user = User.objects.create(
-            first_name=self.cleaned_data.get("first_name"),
-            last_name=self.cleaned_data.get("last_name"),
-            username=self.cleaned_data.get("email"),
-            email=self.cleaned_data.get("email"),
-        )
+        # dont commit to db
+        user = super().save(commit=False)
+        # email is username
+        user.username = self.cleaned_data.get("email")
         user.set_password(self.cleaned_data.get("password1"))
-        user.save()
-        return user
+        user.save()  # commit to db
