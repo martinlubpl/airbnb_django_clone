@@ -136,3 +136,12 @@ AUTH_USER_MODEL = "users.User"
 
 MEDIA_URL = "/media/"
 MEDIA_ROOT = os.path.join(BASE_DIR, "media/")
+
+
+# sending email conf (free mailgun restricted to 5 email recipients)
+EMAIL_HOST = "smtp.mailgun.org"
+EMAIL_PORT = 587
+
+# environment variables in .env
+EMAIL_HOST_USER = os.environ.get("MAILGUN_USER")
+EMAIL_HOST_PASSWORD = os.environ.get("MAILGUN_PASS")

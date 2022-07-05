@@ -53,4 +53,6 @@ class SignUpView(FormView):
         user = authenticate(self.request, username=email, password=password)
         if user:
             login(self.request, user)
+        # send email with mailgun
+        user.email_verification()
         return super().form_valid(form)
