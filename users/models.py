@@ -56,12 +56,13 @@ class User(AbstractUser):
             self.email_secret = uuid.uuid4().hex
             send_mail(
                 "Please verify your MMbnb email",
-                "Here is your secret code: " + self.email_secret,
+                f"To verify your email, visit http://127.0.0.1:8000/users/verify/{self.email_secret}",
                 settings.EMAIL_HOST_USER,
                 [self.email],
                 fail_silently=False,
                 auth_user=settings.EMAIL_HOST_USER,
                 auth_password=settings.EMAIL_HOST_PASSWORD,
+                html_message=f'To verify your MMbnb account, visit <a href="https://127.0.0.1:8000/users/verify/{self.email_secret}">this link</a>',
             )
         return
 
