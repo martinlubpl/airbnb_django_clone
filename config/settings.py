@@ -138,7 +138,8 @@ MEDIA_URL = "/media/"
 MEDIA_ROOT = os.path.join(BASE_DIR, "media/")
 
 
-# sending email conf (free mailgun restricted to 5 email recipients)
+# sending email conf (! free mailgun, restricted to 5 predefined email recipients)
+# in production register with credit card (free 5000 emails per month)
 EMAIL_HOST = "smtp.mailgun.org"
 EMAIL_PORT = 587
 
