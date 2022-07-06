@@ -1,4 +1,5 @@
-import email
+# import email
+import os
 from django.shortcuts import redirect
 from django.contrib.auth import authenticate, login, logout
 from django.views.generic import FormView
@@ -18,7 +19,7 @@ class LoginView(FormView):
     form_class = LoginForm
     success_url = reverse_lazy("core:home")
     initial = {
-        email: "martinpl@gmail.com",  # only for testing
+        "email": "martinpl@gmail.com",  # only for testing
     }
 
     def form_valid(self, form):
@@ -73,3 +74,17 @@ def complete_verification(request, uuid):
         # todo: error message
 
     return redirect("core:home")
+
+
+def login_github(request):
+
+    # github settings => dev settings => oauth apps => new oauth app
+    client_id = os.environ.get("GITHUB_CLIENT_ID")
+    redirect_uri = "http://127.0.0.1:8000/users/login/github/callback"
+    return redirect(
+        f"https://github.com/login/oauth/authorize?client_id={client_id}&redirect_uri={redirect_uri}&scope=read:user"
+    )
+
+
+def github_callback(request):
+    pass
