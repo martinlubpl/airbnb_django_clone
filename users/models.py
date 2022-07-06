@@ -4,6 +4,7 @@ from django.contrib.auth.models import AbstractUser
 from django.db import models
 from django.core.mail import send_mail
 from django.conf import settings
+from django.template.loader import render_to_string
 
 # Create your models here.
 
@@ -54,16 +55,21 @@ class User(AbstractUser):
         """verify email"""
         if not self.email_confirmed:
             self.email_secret = uuid.uuid4().hex
+            html_message = render_to_string(
+                "emails/verify.html", {"secret": self.email_secret}
+            )
             send_mail(
                 "Please verify your MMbnb email",
-                f"To verify your email, visit http://127.0.0.1:8000/users/verify/{self.email_secret}",
+                "To verify your email, visit http://127.0.0.1:8000/users/verify/"
+                + self.email_secret,
                 settings.EMAIL_HOST_USER,
                 [self.email],
                 fail_silently=False,
                 auth_user=settings.EMAIL_HOST_USER,
                 auth_password=settings.EMAIL_HOST_PASSWORD,
-                html_message=f'To verify your MMbnb account, visit <a href="https://127.0.0.1:8000/users/verify/{self.email_secret}">this link</a>',
+                html_message=html_message,
             )
+            self.save()  # remember to save omg !!!
         return
 
     def __str__(self):

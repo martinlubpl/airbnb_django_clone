@@ -7,6 +7,7 @@ from django.urls import reverse_lazy
 # from django.shortcuts import redirect
 # from django.views import View
 from .forms import LoginForm, SignUpForm
+from users.models import User
 
 # Create your views here.
 
@@ -43,7 +44,7 @@ class SignUpView(FormView):
     initial = {
         "first_name": "Marcin",
         "last_name": "Majewski",
-        "email": "martinpl@gmail.com",
+        "email": "smdesign.eu@gmail.com",
     }
 
     def form_valid(self, form):
@@ -56,3 +57,19 @@ class SignUpView(FormView):
         # send email with mailgun
         user.email_verification()
         return super().form_valid(form)
+
+
+def complete_verification(request, uuid):
+    # .get(email_secret=uuid)
+    user = User.objects.filter(email_secret=uuid).first()
+    if user:
+        user.email_confirmed = True
+        user.email_secret = ""
+        user.save()
+        login(request, user)
+        # todo: success message
+    else:
+        pass
+        # todo: error message
+
+    return redirect("core:home")
