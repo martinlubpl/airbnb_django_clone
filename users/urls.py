@@ -17,6 +17,6 @@ urlpatterns = [
     path("logout/", logout_view, name="logout"),
     path("signup/", SignUpView.as_view(), name="signup"),
     path("verify/<str:uuid>", complete_verification, name="verify"),
-    path("loging/github/", login_github, name="login_github"),
-    path("loging/github/callback", github_callback, name="github_callback"),
+    path("login/github/", login_github, name="login_github"),
+    path("login/github/callback", github_callback, name="github_callback"),
 ]

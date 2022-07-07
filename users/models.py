@@ -31,6 +31,16 @@ class User(AbstractUser):
 
     CURRENCY_CHOICES = ((CURRENCY_USD, "USD"), (CURRENCY_PLN, "PLN"))
 
+    LOGIN_EMAIL = "email"
+    LOGIN_GITHUB = "github"
+    LOGIN_FACEBOOK = "facebook"
+
+    LOGIN_CHOICES = (
+        (LOGIN_EMAIL, "Email"),
+        (LOGIN_GITHUB, "Github"),
+        (LOGIN_FACEBOOK, "Facebook"),
+    )
+
     avatar = models.ImageField(upload_to="avatars", blank=True)
     gender = models.CharField(
         choices=GENDER_CHOICES, max_length=10, blank=True, default="other"
@@ -50,6 +60,11 @@ class User(AbstractUser):
 
     email_confirmed = models.BooleanField(default=False)
     email_secret = models.CharField(max_length=32, default="", blank=True)
+    login_method = models.CharField(
+        choices=LOGIN_CHOICES,
+        max_length=10,
+        default=LOGIN_EMAIL,
+    )
 
     def email_verification(self):
         """verify email"""

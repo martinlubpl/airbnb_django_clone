@@ -22,6 +22,7 @@ class CustomUserAdmin(UserAdmin):
         "superhost",
         "email_confirmed",
         "email_secret",
+        "login_method",
     )
 
     list_filter = UserAdmin.list_filter + (
@@ -42,6 +43,7 @@ class CustomUserAdmin(UserAdmin):
                     "language",
                     "currency",
                     "superhost",
+                    "login_method",
                 )
             },
         ),
