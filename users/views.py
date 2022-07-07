@@ -128,7 +128,6 @@ def github_callback(request):
                     api_result = api_request.json()
                     username = api_result.get("login", None)
                     email = api_result.get("email", None)
-                    # print(api_result)
                     if username and email:  # ! some github users don't have email
 
                         # print(api_result)
@@ -161,7 +160,7 @@ def github_callback(request):
                         return redirect("core:home")
 
                     else:  # no username
-                        raise GithubException("No username or no email")
+                        raise GithubException("No username / email")
 
         else:  # if code is None
             raise GithubException

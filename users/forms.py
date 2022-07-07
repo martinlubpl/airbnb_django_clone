@@ -1,4 +1,5 @@
 from django import forms
+from django.contrib.auth.forms import UserCreationForm
 from .models import User
 
 
@@ -26,47 +27,21 @@ class LoginForm(forms.Form):
             self.add_error("email", forms.ValidationError("User does not exist"))
 
 
-class SignUpForm(forms.ModelForm):
+# signup using built-in forms
 
-    # Meta is required for modelforms
-    class Meta:
+# https://docs.djangoproject.com/en/4.0/topics/auth/default/#module-django.contrib.auth.forms
+class SignUpForm(UserCreationForm):
+    # disguise the email field as username
+    username = forms.EmailField(label="Email")
+
+    """ class Meta:
         model = User
-        fields = [
-            "first_name",
-            "last_name",
-            "email",
-            # "password1",
-            # "password2",
-        ]
+        fields = ("email",) """
 
-    password1 = forms.CharField(
-        widget=forms.PasswordInput,
-        label="Password",
-        min_length=8,
-        max_length=20,
-    )
-    password2 = forms.CharField(
-        widget=forms.PasswordInput,
-        label="Confirm Password",
-        min_length=8,
-        max_length=20,
-    )
+    # use: from django.contrib.auth import password_validation
+    # if not using built-in forms to validate pass
 
-    # clean_<field_name>
-    # clean_email unnessesary-ModelForm cleans it. but nneds clean_pass to check passes are equal
-
-    def clean_password2(self):
-        password1 = self.cleaned_data.get("password1")
-        password2 = self.cleaned_data.get("password2")
-        if password1 != password2:
-            raise forms.ValidationError("Passwords do not match")
-        return password2
-
-    def save(self, *args, **kwargs):
-
-        # dont commit to db
-        user = super().save(commit=False)
-        # email is username
-        user.username = self.cleaned_data.get("email")
-        user.set_password(self.cleaned_data.get("password1"))
-        user.save()  # commit to db
+    """ try:
+        password_validation.validate_password(password)
+    except forms.ValidationError as error:
+        self.add_error("password", error) """
