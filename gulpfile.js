@@ -18,4 +18,11 @@ const css = () => {
         .pipe(gulp.dest("static/css"));
 };
 
-exports.default = css;
+const watch = () => {
+    gulp.watch("assets/scss/**/*.scss", css);
+    gulp.watch("templates/**/*.html", css);
+}
+const dev = gulp.series([css, watch]);
+exports.default = dev;
+// export const css;
+// export const dev = gulp.series([css, watch]);

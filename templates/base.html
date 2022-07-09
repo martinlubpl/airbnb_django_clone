@@ -8,14 +8,23 @@
     <link rel="stylesheet" href="{% static 'css/styles.css' %}">
     <title>{% block title %}{% endblock title %} .:. MMbnb</title>
 </head>
-<body>
-    <header>
-        {% include "partials/header.html " %}
+<body class="text-gray-600">
+    <header class="container max-w-full flex items-center justify-between px-6 h-36 border-b">
+        <div class="flex items-center">
+        <a href="{% url 'core:home' %}" class="mr-10">
+            <img class="w-24" src="{% static 'img/logo_bw.png' %}" alt="MMbnb logo">
+        </a>
+        
+        
         {% block search_bar %}
             <form method="GET" action="{% url 'rooms:search' %}">
-                <input name="city" placeholder="Search cities"/>
+                <input class="border p-2 rounded-lg w-64 shadow-md" name="city" placeholder="Search cities"/>
             </form>
         {% endblock search_bar %}
+        </div>
+
+
+        {% include "partials/header.html " %}
         
     </header>
     {% block content %}{% endblock content %}

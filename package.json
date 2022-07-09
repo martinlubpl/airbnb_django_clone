@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "",
   "scripts": {
-    "css": "gulp",
+    "dev": "gulp",
     "_comment": "run with npm run (eg npm run css)"
   },
   "repository": {
