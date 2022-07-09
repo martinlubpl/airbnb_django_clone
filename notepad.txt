@@ -1,0 +1,11 @@
+npm i gulp gulp-postcss gulp-sass gulp-csso node-sass -D
+
+npm install tailwindcss -D
+
+npm install autoprefixer -D
+
+npx tailwind init
+
+npm i
+
+npm run css 

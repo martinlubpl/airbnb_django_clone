@@ -1,0 +1,23 @@
+{
+  "name": "mmbnb",
+  "version": "1.0.0",
+  "description": "",
+  "scripts": {
+    "css": "gulp",
+    "_comment": "run with npm run (eg npm run css)"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/martinlubpl/airbnb_django_clone.git"
+  },
+  "homepage": "https://github.com/martinlubpl/airbnb_django_clone#readme",
+  "devDependencies": {
+    "autoprefixer": "^10.4.7",
+    "gulp": "^4.0.2",
+    "gulp-csso": "^4.0.1",
+    "gulp-postcss": "^9.0.1",
+    "gulp-sass": "^5.1.0",
+    "node-sass": "^7.0.1",
+    "tailwindcss": "^3.1.5"
+  }
+}
