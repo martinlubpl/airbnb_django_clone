@@ -1,11 +1,11 @@
 {% load static %}
 
-<ul class="flex items-center text-sm font-medium mr-8">
+<ul class="flex items-center text-sm font-medium mr-8 h-full flex">
     {% if user.is_authenticated %}
-        <li class="ml-4"><a href="{% url "users:logout" %}">Logout</a></li>
+        <li class="nav_li"><a href="{% url "users:logout" %}">Logout</a></li>
     {% else %}
-        <li class="ml-4 p-2 border-b-2 border-white hover:border-amber-400"><a href="{% url "users:login" %}">Login</a></li>
-        <li class="ml-4"><a href="{% url "users:signup" %}">Sign up</a></li>
+        <li class="nav_li"><a href="{% url "users:login" %}">Login</a></li>
+        <li class="nav_li"><a href="{% url "users:signup" %}">Sign up</a></li>
 
     {% endif %}
 

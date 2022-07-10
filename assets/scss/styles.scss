@@ -7,4 +7,16 @@
     transition: box-shadow 0.7s ease-in-out;
 }
 
+.nav_li {
+    @apply ml-4 p-2 border-b-2 border-white flex h-full items-center;
+
+    a {
+        @apply p-4;
+    }
+
+    &:hover {
+        @apply border-amber-400;
+    }
+}
+
 @tailwind utilities;
