@@ -42,6 +42,7 @@ class RoomDetail(DetailView):
 
     """CBV Room Detail"""
 
+    model = models.Room
     template_name = "rooms/room_detail.html"
     context_object_name = "room"
 

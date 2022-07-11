@@ -6,7 +6,9 @@
 
 {% block content %}
     Time: {{time}}
+    <div class="bg-cover bg-center container mx-auto rounded-xl bg-gray-200 w-full h-50vh my-12" style="background-image: url('static/img/unsplashphoto-warsaw.webp');">
 
+    </div>
     {% comment %} context_object_name="rooms" in views {% endcomment %}
     {% for room in rooms  %} 
         <h3>
