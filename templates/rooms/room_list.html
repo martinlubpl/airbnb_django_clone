@@ -6,27 +6,33 @@
 
 {% block content %}
     Time: {{time}}
-    <div class="bg-cover bg-center container mx-auto rounded-xl bg-gray-200 w-full h-50vh my-12" style="background-image: url('static/img/unsplashphoto-warsaw.webp');">
+
+    <div class="container mx-auto">
+        <!--top image-->
+        <div class=" bg-cover bg-center rounded-xl bg-gray-200 w-full h-50vh my-12" style="background-image: url('static/img/unsplashphoto-warsaw.webp');"></div>
+
+
+        {% comment %} context_object_name="rooms" in views, pass room=room to partial with single card {% endcomment %}
+        <div class="flex flex-wrap -mx-2">
+        {% for room in rooms  %} 
+            {% include 'partials/room_card.html' with room=room %}
+        {% endfor %}
+        </div>
+        <h3>
+            {% if page_obj.has_previous %}<a href="/?page={{page_obj.previous_page_number}}"><< Previous<a>{% endif %}
+            Page {{page_obj.number}} of {{page_obj.paginator.num_pages}}
+            {% if page_obj.has_next %}<a href="/?page={{page_obj.next_page_number}}">Next >><a>{% endif %}
+        </h3>
+
+        Pages: 
+        {% for page in page_obj.paginator.page_range %}
+            <a href="/?page={{page}}">{{page}}</a>  
+        {% endfor %}
 
     </div>
-    {% comment %} context_object_name="rooms" in views {% endcomment %}
-    {% for room in rooms  %} 
-        <h3>
-            {% comment %} rooms in namespace, room detail is name in path, room.pk is arg {% endcomment %}
-            <a href="{% url 'rooms:room_detail' room.pk %}">
-                {{ room.name }} at {{ room.price }}$ per night
-            </a>
-        </h3>
-    {% endfor %}
+    
 
-    <h3>
-        {% if page_obj.has_previous %}<a href="/?page={{page_obj.previous_page_number}}"><< Previous<a>{% endif %}
-          Page {{page_obj.number}} of {{page_obj.paginator.num_pages}}
-        {% if page_obj.has_next %}<a href="/?page={{page_obj.next_page_number}}">Next >><a>{% endif %}
-    </h3>
 
-    Pages: 
-    {% for page in page_obj.paginator.page_range %}
-        <a href="/?page={{page}}">{{page}}</a>  
-    {% endfor %}
+
+    
 {% endblock content %}

@@ -1,0 +1,21 @@
+
+{% comment %} rooms in namespace, room detail is name in path, room.pk is arg {% endcomment %}
+
+
+<div class="w-1/4 mb-10 px-1">
+    <div class="w-full h-36 bg-cover bg-center rounded-md" style="background-image: url({{ room.get_first_photo}})"></div>
+    <div>
+        <div>
+            {{ room.city }}
+        </div>
+        <div>
+            {{ room.get_room_average }}
+        </div>
+    </div>
+
+<!--1
+    <a href="{% url 'rooms:room_detail' room.pk %}">
+        <img src="{{ room.get_first_photo}}" />
+        {{ room.name }} at {{ room.price }}$ per night
+    </a>-->
+</div>

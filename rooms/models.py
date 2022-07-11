@@ -106,6 +106,14 @@ class Room(TimeStampModel):
 
     get_room_average.short_description = "Room Rating"
 
+    def get_first_photo(self):
+        """gets the first photo of the room and returns its file.url (file is a field in model)"""
+        try:
+            photo = self.photos.first()
+            return photo.file.url
+        except Exception as e:
+            return e
+
 
 class Photo(TimeStampModel):
     """Photo Model"""

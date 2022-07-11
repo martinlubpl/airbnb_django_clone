@@ -24,9 +24,9 @@ class HomeView(ListView):
 
     template_name = "rooms/room_list.html"
     model = models.Room
-    paginate_by = 10
+    paginate_by = 12
     ordering = "created"
-    paginate_orphans = 5
+    paginate_orphans = 4
     page_kwarg = "page"  # /?page_kwarg=1
     context_object_name = "rooms"
     # page_obj is sent
