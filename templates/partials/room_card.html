@@ -3,24 +3,26 @@
 
 
 <div class="w-1/4 mb-5 px-1 overflow-hidden">
-    <div class="w-full h-36 bg-cover bg-center rounded-md mb-2" style="background-image: url({{ room.get_first_photo}})"></div>
-    <div class="flex justify-between items-center mb-1 truncate">
-        
-        <div class="w-4/5 overflow-hidden flex" >
-            <!--superhost-->
-            {% if room.host.superhost %}
-               <span class="uppercase text-xs font-medium text-gray-500 border border-gray-500 rounded py-0.5 px-2 mr-1">superhost</span>
-            {% endif %}
-            <!--city (country)-->
-            <span class="font-medium  block truncate overflow-hidden">{{ room.city }} ({{room.country.name}})</span>
+    <a href="{% url 'rooms:room_detail' room.pk %}">
+        <div class="w-full h-36 bg-cover bg-center rounded-md mb-2" style="background-image: url({{ room.get_first_photo}})"></div>
+        <div class="flex justify-between items-center mb-1 truncate">
+            
+            <div class="w-4/5 overflow-hidden flex" >
+                <!--superhost-->
+                {% if room.host.superhost %}
+                <span class="uppercase text-xs font-medium text-gray-500 border border-gray-500 rounded py-0.5 px-2 mr-1">superhost</span>
+                {% endif %}
+                <!--city (country)-->
+                <span class="font-medium  block truncate overflow-hidden">{{ room.city }} ({{room.country.name}})</span>
+            </div>
+            <!--second line-->
+            <span class="text-sm flex items-center">
+                <i class="fa-solid fa-star text-amber-400 text-xs mr-1"></i>
+                {{ room.get_room_average }}
+            </span>
         </div>
-        <!--second line-->
-        <span class="text-sm flex items-center">
-            <i class="fa-solid fa-star text-amber-400 text-xs mr-1"></i>
-            {{ room.get_room_average }}
-        </span>
-    </div>
-    <span class="w-11/12 overflow-hidden block truncate">{{ room.name }}</span>
+        <span class="w-11/12 overflow-hidden block truncate">{{ room.name }}</span>
+    </a>
 <!--1
     <a href="{% url 'rooms:room_detail' room.pk %}">
         <img src="{{ room.get_first_photo}}" />

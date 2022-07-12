@@ -27,11 +27,14 @@
 
             {% if page_obj.has_next %}<a href="/?page={{page_obj.next_page_number}}"><i class="fa-solid fa-square-caret-right fa-lg text-amber-400"></i><a>{% endif %}
         </div>
-
+        
+        
+        <div class="my-5">
         Pages: 
         {% for page in page_obj.paginator.page_range %}
             <a href="/?page={{page}}">{{page}}</a>  
         {% endfor %}
+        </div>
 
     </div>
     
